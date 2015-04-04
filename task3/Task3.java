@@ -2,41 +2,47 @@ import java.io.*;
 import java.util.*;
 
 public class Task3 {
+    public static double[] readDoubleArray(File file) throws IOException {
+        try (Scanner fin = new Scanner(file)) {
+            List<Double> list = new ArrayList<>();
+
+            while (fin.hasNextDouble())
+                list.add(fin.nextDouble());
+
+            double[] array = new double[list.size()];
+            for (int i = 0; i < array.length; i++)
+                array[i] = list.get(i);
+            list.clear();
+
+            return array;
+        }
+    }
+
     public static void main(String[] args) {
         try {
             if (args.length != 2)
                 throw new IOException("Usage: [sort type] [input file name]");
 
-            try (Scanner fin = new Scanner(new File(args[1]))) {
-                List<Double> list = new ArrayList<>();
+            double[] array = readDoubleArray(new File(args[1]));
 
-                while (fin.hasNext())
-                    list.add(fin.nextDouble());
-
-                double[] array = new double[list.size()];
-                for (int i = 0; i < array.length; i++)
-                    array[i] = list.get(i);
-                list.clear();
-
-                String sortType = args[0].toLowerCase();
-                Sortable sortable = null;
-                switch (sortType) {
-                    case "quick":
-                        sortable = new QuickSortableArray(array);
-                        break;
-                    case "bubble":
-                        sortable = new BubbleSortableArray(array);
-                        break;
-                    case "shift":
-                        sortable = new ShiftSortableArray(array);
-                        break;
-                    default:
-                        throw new IOException("Unresolved sort type \"" + sortType + "\"");
-                }
-                sortable.sort();
-
-                System.out.println(sortable);
+            String sortType = args[0].toLowerCase();
+            Sortable sortable = null;
+            switch (sortType) {
+                case "quick":
+                    sortable = new QuickSortableArray(array);
+                    break;
+                case "bubble":
+                    sortable = new BubbleSortableArray(array);
+                    break;
+                case "shift":
+                    sortable = new ShiftSortableArray(array);
+                    break;
+                default:
+                    throw new IOException("Unresolved sort type \"" + sortType + "\"");
             }
+            sortable.sort();
+
+            System.out.println(sortable);
         }
         catch (IOException e) {
             System.err.println(e.getMessage());
