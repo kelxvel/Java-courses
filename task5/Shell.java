@@ -322,7 +322,7 @@ public class Shell {
                 return 1;
             }
 
-            out.printf("Filesystem\t1K-blocks\t     Used\tAvailable\tUse%%\tMounted on\n");
+            out.printf("Filesystem\t1K-blocks      Used Available Use%% Mounted on\n");
             for (FileStore fs : FileSystems.getDefault().getFileStores()) {
                 String fstr = fs.toString();
                 String mountPoint = fstr.substring(0, fstr.indexOf('(')).trim();
@@ -339,7 +339,7 @@ public class Shell {
                 if (used == 0 && available == 0)
                     continue;
 
-                out.printf("%-10s\t%9d\t%9d\t%9d\t%3d%%\t%s\n", filesystem, total, used, available, usePercent, mountPoint);
+                out.printf("%-10s\t%9d %9d %9d %3d%% %s\n", filesystem, total, used, available, usePercent, mountPoint);
             }
             return 0;
         }
