@@ -2,8 +2,9 @@ import java.util.Stack;
 import java.util.regex.*;
 
 public class ValidatorHTML {
+    private static final Pattern p = Pattern.compile("\\<(.*?)\\>");
+
     public boolean validate(String htmlCode) {
-        Pattern p = Pattern.compile("\\<(.*?)\\>");
         Matcher m = p.matcher(htmlCode);
 
         Stack<String> elements = new Stack<>();
