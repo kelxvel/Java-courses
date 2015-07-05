@@ -2,17 +2,16 @@ import java.util.Stack;
 import java.util.regex.*;
 
 public class ValidatorHTML {
-    private static final Pattern tagPattern = Pattern.compile("\\<(.*?)\\>");
+    private static final Pattern tagPattern = Pattern.compile("<(.*?)>");
 
     /**
      * Checks the correctness of HTML code in terms of order of opening / closing tag.
      * Also prints tag name and position number in <code>htmlCode</code> where error found.
-     * @param htmlCode
+     * @param htmlCode HTML code to be validate
      * @return true if the <code>htmlCode</code> correct HTML in terms of order of opening / closing tag
      */
     public boolean validate(String htmlCode) {
         Matcher m = tagPattern.matcher(htmlCode);
-
         Stack<String> tags = new Stack<>();
         while (m.find()) {
             String tag = m.group();
